@@ -1,6 +1,7 @@
 import { Text, View } from "react-native"
 import styled from "styled-components";
 import InputField from "../components/InputField";
+import ProductList from "../components/ProductList";
 
 const PageContainer = styled.View`
     width:100%;
@@ -20,7 +21,7 @@ function HomePage() {
         <PageContainer>
             <Title>Find the best coffee for you</Title>
             <InputField />
-
+            <ProductList/>
         </PageContainer>
     )
 }
