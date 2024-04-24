@@ -1,4 +1,4 @@
-::import styled from 'styled-components';
+import styled from 'styled-components';
 import LinearGradient from 'react-native-linear-gradient';
 
 import Products from '../../products.db';
