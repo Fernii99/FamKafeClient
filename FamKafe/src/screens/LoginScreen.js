@@ -86,13 +86,3 @@ function LoginScreen() {
 }
 
 export default LoginScreen;
-
-// const {setIsUserLogged} = useContext(Context)
-
-//     async function googleLogIn(){
-//         await setIsUserLogged(true)
-//     }
-
-//     async function guestLogIn(){
-//         await setIsUserLogged(false)
-//     }
