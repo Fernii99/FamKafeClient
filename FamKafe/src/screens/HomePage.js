@@ -1,6 +1,7 @@
-import { Text, View } from "react-native"
+import { Text, View, ScrollView } from "react-native"
 import styled from "styled-components";
 import InputField from "../components/InputField";
+import ProductList from "../components/ProductList";
 
 const PageContainer = styled.View`
     width:100%;
@@ -16,12 +17,18 @@ const Title = styled.Text`
 `
 
 function HomePage() {
-    return( 
-        <PageContainer>
-            <Title>Find the best coffee for you</Title>
-            <InputField />
 
+
+    return( 
+        <ScrollView style={{flex: 1}}>
+        <Title>Find the best coffee for you</Title>
+        <InputField />
+        <PageContainer>
+           
+            <ProductList />
         </PageContainer>
+        </ScrollView>
+
     )
 }
 
