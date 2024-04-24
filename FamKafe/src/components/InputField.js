@@ -13,7 +13,7 @@ export default function InputField(){
 
 const Styles = StyleSheet.create({
     input: {
-        height: '7%',
+        height: '2%',
         width: '90%',
         marginTop: '5%',
         marginBottom: '5%',

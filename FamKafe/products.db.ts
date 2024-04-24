@@ -1,63 +1,73 @@
 const Products = [
     {
       "name": "Espresso",
-      "Price": "2.50",
-      "Ingredients": "Ground coffee beans",
-      "Type": "Beverage"
+      "price": "2.50",
+      "ingredients": "Ground coffee beans",
+      "type": "Beverage",
+      "image": '../../public/images/products/espresso.png'
     },
     {
       "name": "Cappuccino",
-      "Price": "3.50",
-      "Ingredients": "Espresso, steamed milk, milk foam",
-      "Type": "Beverage"
+      "price": "2.50",
+      "ingredients": "Ground coffee beans",
+      "type": "Beverage",
+      "image": '../../public/images/products/cappuccino.png'
     },
     {
-      "name": "Latte",
-      "Price": "3.75",
-      "Ingredients": "Espresso, steamed milk",
-      "Type": "Beverage"
+      "name": "Juice",
+      "price": "2.50",
+      "ingredients": "Ground coffee beans",
+      "type": "Beverage",
+      "image": '../../public/images/products/juice.png'
     },
     {
-      "name": "Mocha",
-      "Price": "4.00",
-      "Ingredients": "Espresso, steamed milk, chocolate syrup",
-      "Type": "Beverage"
+      "name": "Espresso2",
+      "price": "2.50",
+      "ingredients": "Ground coffee beans",
+      "type": "Beverage",
+      "image": '../../public/images/products/espresso.png'
     },
     {
-      "name": "Americano",
-      "Price": "2.75",
-      "Ingredients": "Espresso, hot water",
-      "Type": "Beverage"
+      "name": "Espresso3",
+      "price": "2.50",
+      "ingredients": "Ground coffee beans",
+      "type": "Beverage",
+      "image": '../../public/images/products/cappuccino.png'
     },
     {
-      "name": "Macchiato",
-      "Price": "3.25",
-      "Ingredients": "Espresso, a dollop of steamed milk",
-      "Type": "Beverage"
+      "name": "Espresso4",
+      "price": "2.50",
+      "ingredients": "Ground coffee beans",
+      "type": "Beverage",
+      "image": '../../public/images/products/juice.png'
     },
     {
-      "name": "Filter Coffee",
-      "Price": "2.00",
-      "Ingredients": "Ground coffee beans, hot water",
-      "Type": "Beverage"
+      "name": "Espresso5",
+      "price": "2.50",
+      "ingredients": "Ground coffee beans",
+      "type": "Beverage",
+      "image": '../../public/images/products/espresso.png'
     },
     {
-      "name": "Iced Coffee",
-      "Price": "3.50",
-      "Ingredients": "Cold brew coffee, ice, milk (optional)",
-      "Type": "Beverage"
+      "name": "Espresso6",
+      "price": "2.50",
+      "ingredients": "Ground coffee beans",
+      "type": "Beverage",
+      "image": '../../public/images/products/cappuccino.png'
     },
     {
-      "name": "Hot Chocolate",
-      "Price": "3.25",
-      "Ingredients": "Hot milk, chocolate powder",
-      "Type": "Beverage"
+      "name": "Espresso7",
+      "price": "2.50",
+      "ingredients": "Ground coffee beans",
+      "type": "Beverage",
+      "image": '../../public/images/products/juice.png'
     },
     {
-      "name": "Tea",
-      "Price": "2.25",
-      "Ingredients": "Tea leaves, hot water",
-      "Type": "Beverage"
+      "name": "Espresso8",
+      "price": "2.50",
+      "ingredients": "Ground coffee beans",
+      "type": "Beverage",
+      "image": '../../public/images/products/cappuccino.png'
     }
   ]
 
