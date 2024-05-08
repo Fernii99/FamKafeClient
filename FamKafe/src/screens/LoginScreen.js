@@ -70,7 +70,9 @@ function LoginScreen() {
                 idToken: idTokenResult.token
             })
             .then( async function (response) {
-                await setUserData({name: idTokenResult.claims.name, email: idTokenResult.claims.email, picture: idTokenResult.claims.picture });
+                console.log("REPONSE RECEIVED BY THE SERVER")
+                console.log(response.data.data[0])
+                await setUserData({name: response.data.data[0].name, email: response.data.data[0].email, picture: response.data.data[0].image });
                 await setIsUserLogged(true);
             })
               .catch(function (error) {
@@ -87,8 +89,6 @@ function LoginScreen() {
         console.log("entered the .then function of login with FIREBASE")
         
       }
-
-    
 
     return( 
         <View style={{ flex: 1, alignItems: "center", justifyContent: "center"}}>
