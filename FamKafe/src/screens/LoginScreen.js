@@ -2,10 +2,10 @@ import { Text, View } from "react-native"
 import styled from "styled-components";
 import Logo from "../../public/images/logo.png"
 import { Context } from "../../helpers/context/context";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-
+import axios from "axios";
 
 const PageContainer = styled.View`
     flex:1;
@@ -34,6 +34,11 @@ const GoogleButton = styled.TouchableOpacity`
    
 
 function LoginScreen() {
+
+    const {setIsUserLogged, userData, setUserData } = useContext(Context);
+
+
+
     GoogleSignin.configure({
         webClientId: '811480831851-ic2jfgl63lucfv9kcokchc9d94pati55.apps.googleusercontent.com',
         });
@@ -60,11 +65,26 @@ function LoginScreen() {
             const idTokenResult = await auth().currentUser.getIdTokenResult();
             console.log("idTokenResult")
             console.log(idTokenResult)
+
+            await axios.post("http://localhost:3000/users/login", {
+                idToken: idTokenResult.token
+            })
+            .then( async function (response) {
+                await setUserData({name: idTokenResult.claims.name, email: idTokenResult.claims.email, picture: idTokenResult.claims.picture });
+                await setIsUserLogged(true);
+            })
+              .catch(function (error) {
+                console.log("LOGIN CALL TO SERVER RESPONSE ON .CATCH")
+                console.log(error);
+              });
         }
         catch (error){
             console.log(error)
-
         }
+      }
+
+      async function setUserLogin(){
+        console.log("entered the .then function of login with FIREBASE")
         
       }
 
@@ -74,12 +94,9 @@ function LoginScreen() {
         <View style={{ flex: 1, alignItems: "center", justifyContent: "center"}}>
             <LogoImage source={Logo}/>
             <PageContainer>
-                <GoogleButton onPress={() => onGoogleButtonPress().then(() => console.log('Signed in with Google!'))}> 
+                <GoogleButton onPress={() => onGoogleButtonPress()}> 
                     <Text> Log in with google </Text> 
                 </GoogleButton>
-                {/* <GoogleButton onPress={guestLogIn}> 
-                    <Text> Log in as Guest </Text> 
-                </GoogleButton> */}
             </PageContainer>
         </View>
     )

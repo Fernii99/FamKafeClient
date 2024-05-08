@@ -24,7 +24,6 @@ function HomePage() {
         <Title>Find the best coffee for you</Title>
         <InputField />
         <PageContainer>
-           
             <ProductList />
         </PageContainer>
         </ScrollView>
