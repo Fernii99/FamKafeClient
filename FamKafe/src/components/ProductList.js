@@ -2,7 +2,14 @@ import styled from 'styled-components';
 import LinearGradient from 'react-native-linear-gradient';
 
 import Products from '../../products.db';
-import {View, Text, FlatList} from 'react-native';
+import {View, Text, FlatList, Modal, Alert} from 'react-native';
+import { useEffect, useState } from 'react';
+
+import { useContext } from 'react';
+import { Context } from '../../helpers/context/context';
+
+import getAllProducts from '../helpers/axios/getAllProducts';
+import ProductScreen from '../screens/ProductScreen';
 
 const ProductsContainer = styled.View`
     flex: 1;
@@ -40,24 +47,26 @@ const ProductName = styled.Text`
   text-align: left;
   width: 85%;
 `;
+
 const ProductType = styled.Text`
   color: whitesmoke;
   font-size: 10px;
   text-align: left;
   width: 85%;
 `;
+
 const PriceContainer = styled.View`
+    width: 130px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     flex-direction: row;
     margin-top: 20px;
-    align-items:center;
-`;
+`
 
 const ProductPrice = styled.Text`
     color: whitesmoke;
     font-size: 20px;
-`;
+`
 
 const AddToCartButton = styled.TouchableOpacity`
   display: flex;
@@ -75,13 +84,23 @@ const AddToCartText = styled.Text`
 `;
 
 export default ProductList = () => {
+
+  const {allProducts} = useContext(Context);
+  const [productModalVisible, setProductModalVisible ] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState([]);
+
+
+    
+  useEffect(() => {
+      retrieveProducts();
+  }, [])
+
+  const retrieveProducts = async ( ) => {
+   
+  }
+
   const categories = [
-    'COFFEE',
-    'JUICES',
-    'BOWLS',
-    'PROTEIN SHAKES',
-    'SHAKES',
-    'SWEETS',
+    "coffees"
   ];
 
   return (
@@ -95,26 +114,25 @@ export default ProductList = () => {
                 <FlatList
                     style={{flex: 1, height: '35%', paddingLeft: '2%'}}
                     horizontal={true}
-                    data={Products}
+                    data={allProducts}
                     renderItem={({item}) => (
-                        <ProductCard>
+                        <ProductCard 
+                          onPress={() => { setProductModalVisible(true), setSelectedProduct(item) }}>
                                 <LinearGradient colors={['rgba(255, 255, 255, 0.2)', 'rgba(12, 15, 20, 0.5)']}  start={{ x: 0, y: 0 }} end={{ x: 0.7, y: 0.7 }} style={{ width: '100%', alignItems: 'center', borderRadius: 15}} >
                                 <ProductImage
-                                source={require('../../public/images/products/cappuccino.png')}
+                                  source={{uri: item.image}}
                                 />
                                 <ProductName>{item.name}</ProductName>
-                                <ProductType>{item.type}</ProductType>
+                                <ProductType>{item.category}</ProductType>
                                 <PriceContainer>
-                                
-                                <View>
-                                <ProductPrice>{item.price}</ProductPrice>
-                                </View>
-                                <View>
-                                <AddToCartButton>
-                                    <AddToCartText>+</AddToCartText>
-                                </AddToCartButton>
-                                </View>
-                                
+                                  <View>
+                                    <ProductPrice>{item.price} €</ProductPrice>
+                                  </View>
+                                  <View>
+                                  <AddToCartButton>
+                                      <AddToCartText>+</AddToCartText>
+                                  </AddToCartButton>
+                                  </View>
                                 </PriceContainer>
                         </LinearGradient>
                             </ProductCard>
@@ -125,6 +143,14 @@ export default ProductList = () => {
                 )}
                 keyExtractor={item => item}
                 />
+                 <Modal  animationType="slide"
+                            transparent={false}
+                            visible={productModalVisible}
+                           > 
+                            <ProductScreen item={selectedProduct} setProductModalVisible={setProductModalVisible} />
+                          </Modal>
                 </ProductsContainer>
+
+              
   );
 };

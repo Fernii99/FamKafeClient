@@ -2,10 +2,15 @@ import { Text, View } from "react-native"
 import styled from "styled-components";
 import Logo from "../../public/images/logo.png"
 import { Context } from "../../helpers/context/context";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { storeUserData } from "../helpers/asyncStorageUser";
+
+
 
 const PageContainer = styled.View`
     flex:1;
@@ -35,9 +40,7 @@ const GoogleButton = styled.TouchableOpacity`
 
 function LoginScreen() {
 
-    const {setIsUserLogged, userData, setUserData } = useContext(Context);
-
-
+    const { setLoginVisible } = useContext(Context)
 
     GoogleSignin.configure({
         webClientId: '811480831851-ic2jfgl63lucfv9kcokchc9d94pati55.apps.googleusercontent.com',
@@ -49,31 +52,23 @@ function LoginScreen() {
             await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
             // Get the users ID token
             const { idToken } = await GoogleSignin.signIn();
-            console.log("idToken")
-            console.log(idToken)
 
             // Create a Google credential with the token
-            const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-            console.log("googleCredential")
-            console.log(googleCredential)
-
+            const googleCredential = await auth.GoogleAuthProvider.credential(idToken);
+            
             // Sign-in the user with the credential
-            const signInWithCredential =  auth().signInWithCredential(googleCredential);
-            console.log("signInWithCredential")
-            console.log(signInWithCredential)
+            const idTokenResult = await auth().currentUser.getIdTokenResult(googleCredential);
 
-            const idTokenResult = await auth().currentUser.getIdTokenResult();
-            console.log("idTokenResult")
-            console.log(idTokenResult)
 
             await axios.post("http://localhost:3000/users/login", {
                 idToken: idTokenResult.token
             })
             .then( async function (response) {
-                console.log("REPONSE RECEIVED BY THE SERVER")
-                console.log(response.data.data[0])
-                await setUserData({name: response.data.data[0].name, email: response.data.data[0].email, picture: response.data.data[0].image });
-                await setIsUserLogged(true);
+                console.log("idTokenResult")
+            console.log(idTokenResult)
+                const profileData = response.data.data[0]
+                await storeUserData(profileData);
+                setLoginVisible(false)
             })
               .catch(function (error) {
                 console.log("LOGIN CALL TO SERVER RESPONSE ON .CATCH")
@@ -84,12 +79,7 @@ function LoginScreen() {
             console.log(error)
         }
       }
-
-      async function setUserLogin(){
-        console.log("entered the .then function of login with FIREBASE")
-        
-      }
-
+      
     return( 
         <View style={{ flex: 1, alignItems: "center", justifyContent: "center"}}>
             <LogoImage source={Logo}/>

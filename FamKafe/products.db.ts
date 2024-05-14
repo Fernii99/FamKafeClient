@@ -4,7 +4,9 @@ const Products = [
       "price": "2.50",
       "ingredients": "Ground coffee beans",
       "type": "Beverage",
-      "image": '../../public/images/products/espresso.png'
+      "image": '../../public/images/products/espresso.png',
+      "shortDescription" : "cafe solo preparado a alta presion",
+      "longDescription": "es un tipo de café negro fuerte que se forma cuando el agua caliente pasa a mucha presión través de los granos de café molidos"
     },
     {
       "name": "Cappuccino",
@@ -14,9 +16,9 @@ const Products = [
       "image": '../../public/images/products/cappuccino.png'
     },
     {
-      "name": "Juice",
+      "name": "Ulia",
       "price": "2.50",
-      "ingredients": "Ground coffee beans",
+      "ingredients": "Mandarina, Zanahoria, Calabaza y zumo de lima",
       "type": "Beverage",
       "image": '../../public/images/products/juice.png'
     },

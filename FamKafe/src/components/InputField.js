@@ -1,27 +1,52 @@
 
+import { useContext, useEffect, useState } from "react";
+import { set } from "react-hook-form";
 import { TextInput, StyleSheet } from "react-native"
+import styled from "styled-components";
+import { Context } from "../../helpers/context/context";
+
+const CustomTextInput = styled.TextInput`
+  display:flex;
+  align-items:center;
+  justify-content: center;
+  width: 90%;
+  height: 8%;
+  color: yellow;
+  margin-left: 5%;
+  margin-right: 5%;
+  border-color: rgba(82, 85, 90, 0.4);
+  background-color: #141921 ;
+  border-radius: 40px;
+  padding-left: 20px;
+  margin-bottom: 3%;
+`
 
 export default function InputField(){
+
+  const{ setFilterValue, allProducts, setAllProducts } = useContext(Context)
+
+  const [inputValue, setInputValue] = useState("")
+
+  useEffect(() => {
+    console.log(allProducts)
+    setAllProducts(filterProducts());
+  }, [inputValue])
+
+
+  const filterProducts = () =>{
+      const listOfProducts=  allProducts.filter(product  => { product.name === "solo"})
+      return listOfProducts;
+    }
+  
+
     return(
-        <TextInput
-        style={Styles.input}
-        onChangeText={() => {}}
-        placeholder={"Search for somethign..."}
+        <CustomTextInput
+        onChangeText={(value) => {
+          setInputValue(value)
+        }}
+        value={inputValue}
+        
+        placeholder={"Search for something..."}
       />
     )
 }
-
-const Styles = StyleSheet.create({
-    input: {
-        height: '2%',
-        width: '90%',
-        marginTop: '5%',
-        marginBottom: '5%',
-        marginHorizontal: '5%',
-        borderColor: 'rgba(82, 85, 90, 0.1)',
-        padding: 15,
-        borderRadius: 20,
-        color: 'white',
-        backgroundColor: '#141921',
-    },
-  });
