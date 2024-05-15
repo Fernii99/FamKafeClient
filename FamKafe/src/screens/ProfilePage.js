@@ -16,9 +16,6 @@ const NameContainer = styled.View`
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
-    border: 1px solid;
-    border-color: white;
-    border-radius: 10px;
     margin-bottom: 20px;
 `
 
@@ -50,8 +47,8 @@ const ProfilePictureContainer = styled.View`
 `
 
 const ProfilePicture = styled.Image`
-    height: 200px;
-    width: 150px;
+    height: 190px;
+    width: 190px;
     border-radius: 150px;
 `
 
@@ -59,45 +56,32 @@ const ProfileText = styled.Text`
     font-size: 25px;
     margin-top:3%;
     margin-bottom:3%;
-    color: yellow;
+    color: gray;
 `
 
 const ProfilePage = () =>{
 
-    // const { profileData } = useContext(Context);
+    const { profileData } = useContext(Context);
 
-    const [userData, setUserData ] = useState("");
+    useEffect(() => {
+        console.log(profileData)
+    })
 
-
-
-    useEffect(()=> {
-        setUserData(profileInformation);
-       
-    }, [])
-
-    useEffect(()=> {
-     
-    }, [userData])
-
-const profileInformation = async() =>{
-    const user =  await getUserData();
-    return user
-}
 
     return(
         <ProfileContainer>
             <NameContainer>
-            <ProfileText> {userData.name} </ProfileText>
+            <ProfileText> {profileData.name} </ProfileText>
             </NameContainer>
            
             <ProfilePictureBadgesContainer>
             <ProfilePictureContainer>
-                    <ProfilePicture source={{uri: userData.picture }} />
+                    <ProfilePicture source={{uri: profileData.image }} />
                 </ProfilePictureContainer>
             </ProfilePictureBadgesContainer>
             <ProfileBadgesContainer>
                 <ProfileText>Pedidos realizados </ProfileText>
-                <ProfileText>{userData.email}</ProfileText>
+                <ProfileText>{profileData.email}</ProfileText>
 
                 </ProfileBadgesContainer>
         </ProfileContainer>

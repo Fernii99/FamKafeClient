@@ -29,23 +29,16 @@ export default function InputField(){
 
   useEffect(() => {
     console.log(allProducts)
-    setAllProducts(filterProducts());
   }, [inputValue])
 
 
-  const filterProducts = () =>{
-      const listOfProducts=  allProducts.filter(product  => { product.name === "solo"})
-      return listOfProducts;
-    }
+ 
   
 
     return(
         <CustomTextInput
-        onChangeText={(value) => {
-          setInputValue(value)
-        }}
+        onChangeText={() =>{}}
         value={inputValue}
-        
         placeholder={"Search for something..."}
       />
     )

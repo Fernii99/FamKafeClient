@@ -18,13 +18,14 @@ function App(){
 
   const [userLogged, setUserLogged ] = useState(false);
   const [loginVisible, setLoginVisible] = useState(true);
-  const [filterValue, setFilterValue ] = useState("")
-  const [allProducts, setAllProducts] = useState("")
+  const [filterValue, setFilterValue ] = useState("");
+  const [profileData, setProfileData] = useState("");
+  const [allProducts, setAllProducts] = useState("");
+  const [actualOrder, setActualOrder] = useState([]);
 
   useEffect(() => {
     console.log("initial load of the app")
     userDataSaved();
-    
   }, [])
 
   const userDataSaved = async () =>{
@@ -36,6 +37,7 @@ function App(){
     else{
       setLoginVisible(false)
       const productsList = await getProducts()
+      setProfileData(userData);
       console.log(productsList);
       setAllProducts(productsList);
     }
@@ -51,7 +53,7 @@ function App(){
 
   return (
     <SafeAreaView style={{backgroundColor:'#0C0F14', flex:1}}>
-      <Context.Provider value={{ userLogged, setUserLogged, setLoginVisible, filterValue, setFilterValue, setAllProducts, allProducts, }}>
+      <Context.Provider value={{ userLogged, setUserLogged, setLoginVisible, filterValue, setFilterValue, setAllProducts, allProducts, actualOrder, setActualOrder, profileData }}>
         <View style={{position: "relative", top: 0, left: 0, width: '100%', height: 50, backgroundColor: 'transparent'}}>
         </View>
           <Modal

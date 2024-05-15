@@ -11,6 +11,8 @@ import { Context } from '../../helpers/context/context';
 import getAllProducts from '../helpers/axios/getAllProducts';
 import ProductScreen from '../screens/ProductScreen';
 
+import cartManager from '../helpers/CartManager'
+
 const ProductsContainer = styled.View`
     flex: 1;
 `;
@@ -85,19 +87,27 @@ const AddToCartText = styled.Text`
 
 export default ProductList = () => {
 
-  const {allProducts} = useContext(Context);
+  const {allProducts, actualOrder, setActualOrder} = useContext(Context);
   const [productModalVisible, setProductModalVisible ] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState([]);
 
+   const addToCart = (item) => {
 
-    
-  useEffect(() => {
-      retrieveProducts();
-  }, [])
+    console.log("ACTUAL ORDER")
+    console.log(actualOrder)
 
-  const retrieveProducts = async ( ) => {
-   
-  }
+    const productToFind = actualOrder.find((element) => (element._id === item._id ));
+
+    if(productToFind === undefined){
+      item.amount = 1;
+      console.log("ITEM AFTER MODIFYING IT")
+      console.log(item)
+      setActualOrder([...actualOrder, item]);
+    }
+    else{
+      item.amount++
+    }
+   }
 
   const categories = [
     "coffees"
@@ -129,7 +139,7 @@ export default ProductList = () => {
                                     <ProductPrice>{item.price} €</ProductPrice>
                                   </View>
                                   <View>
-                                  <AddToCartButton>
+                                  <AddToCartButton onPress={() =>{ addToCart(item) } }>
                                       <AddToCartText>+</AddToCartText>
                                   </AddToCartButton>
                                   </View>
