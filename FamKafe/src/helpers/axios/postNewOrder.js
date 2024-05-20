@@ -7,7 +7,9 @@ export default postNewOrder = async (newOrder) =>{
         const response = await axios.get(`http://localhost:3000/orders/new`, {
             body: newOrder
         }); 
-            return response.data.data
+
+        console.log(response)
+        
         
     }catch(e){
         throw e;

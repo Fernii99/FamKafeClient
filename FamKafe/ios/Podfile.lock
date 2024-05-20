@@ -1131,6 +1131,10 @@ PODS:
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
     - React-RCTImage
+  - RNVectorIcons (10.1.0):
+    - glog
+    - RCT-Folly (= 2022.05.16.00)
+    - React-Core
   - SocketRocket (0.6.1)
   - Yoga (1.14.0)
 
@@ -1192,6 +1196,7 @@ DEPENDENCIES:
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -1322,6 +1327,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-google-signin/google-signin"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNVectorIcons:
+    :path: "../node_modules/react-native-vector-icons"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -1394,6 +1401,7 @@ SPEC CHECKSUMS:
   RNFBAuth: 92172d8976baaa829825017174106e2b2c550319
   RNGoogleSignin: 24d3b3261f78b0fae0aa013f8ab6f8d25e369b0c
   RNScreens: f0e300a3be13eff48f8afb0b5c6fc558c9369b03
+  RNVectorIcons: b307b181c8e98d633d416d36421d515cf2fe9e31
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: 805bf71192903b20fc14babe48080582fee65a80
 

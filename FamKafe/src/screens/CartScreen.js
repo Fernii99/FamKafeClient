@@ -1,8 +1,10 @@
 import { useContext, useEffect } from "react";
-import { Alert, ImageBackground, Text, View, ScrollView } from "react-native";
+import { Text, View, ScrollView, TouchableOpacity, Alert } from "react-native";
 import { Context } from "../../helpers/context/context";
 import styled from "styled-components";
 import LinearGradient from "react-native-linear-gradient";
+import Icon from 'react-native-vector-icons/Ionicons';
+import postNewOrder from "../helpers/axios/postNewOrder";
 
 const CartContainer = styled.View`
     width: 100%;
@@ -71,6 +73,18 @@ const ActionButton = styled.TouchableOpacity`
     margin-right: 3%;
 `
 
+const ActionButtonTrash = styled.TouchableOpacity`
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color:  red;
+    border-radius: 5px;
+    margin-left: 3%;
+    margin-right: 3%;
+`
+
 const  ItemAmountCounter = styled.View`
     display: flex;
     align-items: center;
@@ -81,24 +95,49 @@ const  ItemAmountCounter = styled.View`
     border-radius: 10px;
 `
 
+const MakeOrderButton = styled.TouchableOpacity`
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    width: 100%;
+    height: 7%;
+    background-color: #D17842;
+    bottom: 10px;
+    border-radius: 100px;
+
+`
 
 const CartScreen = () =>{
 
-    const {actualOrder, setActualOrder} = useContext(Context)
+    const {profileData, actualOrder, setActualOrder} = useContext(Context)
 
     useEffect(() => {
     }, [])
     useEffect(() => {
     }, [actualOrder])
 
-    const reduceAmount = (index) =>{
-        console.log("reduceAmount");
-        setActualOrder(actualOrder[index].amount + 1);
+    const reduceAmount = (product) =>{
+        const updatedItems = actualOrder.map(item => item.name === product ? {...item, "amount" : item.amount-1} : item ) 
+        setActualOrder(updatedItems);
     }
-    const increaseAmount = (index) =>{
-        console.log("reduceAmount");
-        console.log(actualOrder[index]);
-        setActualOrder(...actualOrder, actualOrder[index].amount + 1);
+    const increaseAmount = (product) =>{
+        const updatedItems = actualOrder.map(item => item.name === product ? {...item, "amount" : item.amount+1} : item ) 
+        setActualOrder(updatedItems);
+    }
+
+    const deleteItem = (product) => {
+        const updatedItems = actualOrder.filter(item => item.name !== product);
+        setActualOrder(updatedItems);
+    };
+
+    const placeOrder =  () => {
+        const orderDate = new Date();
+
+        const newOrder = { "orderDate": orderDate.toString() , "_id": profileData._id, "products": actualOrder, "price": "19" }
+        console.log("newOrder");
+        console.log(newOrder);
+         const response = postNewOrder(newOrder);
+         
     }
 
     return(
@@ -119,18 +158,33 @@ const CartScreen = () =>{
                                         <ProductName>{item.price} €</ProductName>
                                     </View>
                                     <View style={{display: 'flex', flexDirection: 'row'}}>
-                                        <ActionButton /* onPress={() => {reduceAmount(index)}} */><ProductDescription> - </ProductDescription></ActionButton>
-                                        <ItemAmountCounter><Text style={{color: 'white'}}>{item.amount}</Text></ItemAmountCounter>
-                                        <ActionButton  /* onPress={() => {increaseAmount(index)}} */><ProductDescription> + </ProductDescription></ActionButton>
-                                    </View>
+                                        {item.amount === 0 ? 
+                                        <>
+                                            <ActionButtonTrash onPress={() => {deleteItem(item.name)}} ><Icon name="trash" size={20} color="white" /></ActionButtonTrash>
+                                            <ItemAmountCounter><Text style={{color: 'white'}}>{item.amount}</Text></ItemAmountCounter>
+                                            <ActionButton   onPress={() => {increaseAmount(item.name)}} ><ProductDescription> + </ProductDescription></ActionButton>
+                                        </>
+
+                                        :
+                                        <>
+                                            <ActionButton onPress={() => {reduceAmount(item.name)}} ><ProductDescription> - </ProductDescription></ActionButton>
+                                            <ItemAmountCounter><Text style={{color: 'white'}}>{item.amount}</Text></ItemAmountCounter>
+                                            <ActionButton   onPress={() => {increaseAmount(item.name)}} ><ProductDescription> + </ProductDescription></ActionButton>
+                                        </>
+                                        }
+                                        </View>
                                 </ProductButtonsContainer>
                             </LinearGradient>
                     )
                 })}
             </ScrollView>
+            <MakeOrderButton onPress={ () => placeOrder() } ><Text> Realizar Pedido </Text></MakeOrderButton>
 
         </CartContainer>
+       
     )
 }
+
+
 
 export default CartScreen;

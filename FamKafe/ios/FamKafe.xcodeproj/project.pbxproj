@@ -12,6 +12,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		37FEF1F2660C14CFA1293793 /* Pods_FamKafe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52FA79F8F04A0C83B0770EC9 /* Pods_FamKafe.framework */; };
+		38A402112BFB995400B6CC8F /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 38A402102BFB995400B6CC8F /* Fonts */; };
 		38FF1CFD2BD946A4005CD3AE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 38FF1CFC2BD946A4005CD3AE /* GoogleService-Info.plist */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		D2B852C4FA9EABEAD60AACDC /* Pods_FamKafe_FamKafeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B17D5615EC32F1D698986335 /* Pods_FamKafe_FamKafeTests.framework */; };
@@ -37,6 +38,7 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = FamKafe/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = FamKafe/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = FamKafe/main.m; sourceTree = "<group>"; };
+		38A402102BFB995400B6CC8F /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = "../node_modules/react-native-vector-icons/Fonts"; sourceTree = "<group>"; };
 		38FF1CFC2BD946A4005CD3AE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-FamKafe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FamKafe.debug.xcconfig"; path = "Target Support Files/Pods-FamKafe/Pods-FamKafe.debug.xcconfig"; sourceTree = "<group>"; };
 		52FA79F8F04A0C83B0770EC9 /* Pods_FamKafe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FamKafe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,6 +97,7 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				38FF1CFC2BD946A4005CD3AE /* GoogleService-Info.plist */,
+				38A402102BFB995400B6CC8F /* Fonts */,
 			);
 			name = FamKafe;
 			sourceTree = "<group>";
@@ -248,6 +251,7 @@
 				38FF1CFD2BD946A4005CD3AE /* GoogleService-Info.plist in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				38A402112BFB995400B6CC8F /* Fonts in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -611,10 +615,7 @@
 					"-DFOLLY_USE_LIBCPP=1",
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -693,10 +694,7 @@
 					"-DFOLLY_USE_LIBCPP=1",
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
