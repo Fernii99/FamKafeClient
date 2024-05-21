@@ -1,18 +1,57 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomePage from '../screens/ProductsScreen.js';
 import ProfilePage from '../screens/ProfilePage.js';
-import { ImageBackground } from 'react-native';
+import { ImageBackground, Text, View } from 'react-native';
 import CartScreen from '../screens/CartScreen.js';
 import Icon from 'react-native-vector-icons/Ionicons';
+import styled from 'styled-components';
+
+import { Context } from '../../helpers/context/context.js';
+import { useContext } from 'react';
 
 
 
 
 const Tab = createBottomTabNavigator();
 
-export default MortimerNavigation = () =>{
+
+
+const CartIcon = styled.View`
+    padding-top: 15px;
+`
+
+const OrderAmount = styled.View`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; 
+    top:-10px;
+    right: -10px;
+    z-index: 3;
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    background-color: #D17842;
+`
+const AmountText = styled.Text`
+    font-size: 10px;
+    color: white;
+`
+
+
+
+export default BottomNavigation = () =>{
+    const {actualOrder} = useContext(Context)
+
+    console.log("actualOrder NAVIGATION");
+    console.log(actualOrder.length);
+
+    useEffect(() => {
+
+    }, [actualOrder])
+
     return (
     <Tab.Navigator screenOptions={{
                 headerShown: false,
@@ -45,7 +84,7 @@ export default MortimerNavigation = () =>{
                     height: 70,
                 },     
                 tabBarShowLabel: false,
-                tabBarActiveTintColor: 'orange',
+                tabBarActiveTintColor: '#D17842',
                 tabBarIcon: ({color}) => { return (
                     
                 <Icon name="list" size={35} color={color} />)}
@@ -61,7 +100,10 @@ export default MortimerNavigation = () =>{
                 tabBarShowLabel: false,
                 tabBarActiveTintColor: '#D17842',
                 tabBarIcon:({color}) => (
-                    <Icon name="bag" size={30} color={color} />
+                    <>
+                         <CartIcon><Icon name="bag" size={30} color={color}/></CartIcon>
+                        <OrderAmount><AmountText>{actualOrder.length}</AmountText></OrderAmount>
+                    </>
                   ), 
             }
         }

@@ -67,13 +67,11 @@ const ProfilePage = () =>{
         console.log(profileData)
     })
 
-
     return(
         <ProfileContainer>
             <NameContainer>
             <ProfileText> {profileData.name} </ProfileText>
             </NameContainer>
-           
             <ProfilePictureBadgesContainer>
             <ProfilePictureContainer>
                     <ProfilePicture source={{uri: profileData.image }} />

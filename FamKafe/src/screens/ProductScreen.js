@@ -2,8 +2,9 @@ import { View, Text, Image, Button, TouchableOpacity, Modal } from "react-native
 import Products from '../../products.db';
 
 import styled from "styled-components";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import CloseModalButton from "../components/CloseModalButton";
+import { Context } from "../../helpers/context/context";
 
 const ProductContainer = styled.View`
     display: flex;
@@ -11,18 +12,7 @@ const ProductContainer = styled.View`
     width: 100%;
 `
 
-const GoBackButton = styled.TouchableOpacity`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-    width: 7%;
-    height: 7%;
-    background-color: rgba(0,0,0, 0.6);
-    position: absolute;
-    top: 10px;
-    left: 10px;
-`
+
 
 const ProductPicturePontainer = styled.View`
     width: 100%;
@@ -95,14 +85,12 @@ const PriceContainer = styled.View`
     padding-right: 5%;
     flex-direction: row;
     background-color: #0C0F14;
-    
 `
 
 const PriceContainerLeft = styled.View`
     display:flex;
     flex-direction:column;
     align-items:center;
-    
 `
 
 const PriceContainerRight = styled.View`
@@ -110,7 +98,7 @@ const PriceContainerRight = styled.View`
 `
 
 const PriceTextSmall = styled.Text`
-margin-left: 4%;
+    margin-left: 4%;
     font-size: 10px;
     color: white;
 `
@@ -133,7 +121,28 @@ const AddToCartButton = styled.TouchableOpacity`
 `
 
 const ProductScreen = ({item, setProductModalVisible} ) => {
-    console.log(item)
+
+  const {actualOrder, setActualOrder} = useContext(Context);
+
+
+    const addToCart = (item) => {
+
+        console.log("ACTUAL ORDER")
+        console.log(actualOrder)
+    
+        const productToFind = actualOrder.find((element) => (element._id === item._id ));
+    
+        if(productToFind === undefined){
+          item.amount = 1;
+          console.log("ITEM AFTER MODIFYING IT")
+          console.log(item)
+          setActualOrder([...actualOrder, item]);
+        }
+        else{
+          item.amount++
+        }
+       }
+
     return(
             <ProductContainer>
             <ProductPicturePontainer>   
@@ -159,7 +168,7 @@ const ProductScreen = ({item, setProductModalVisible} ) => {
             </PriceContainerLeft>
                
             <PriceContainerRight>
-               <AddToCartButton><PriceText>ADD TO CART</PriceText></AddToCartButton>
+               <AddToCartButton onPress={() =>{ addToCart(item) } }><PriceText>ADD TO CART</PriceText></AddToCartButton>
             </PriceContainerRight>
             </PriceContainer>
         </ProductContainer>

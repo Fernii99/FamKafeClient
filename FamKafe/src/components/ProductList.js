@@ -74,7 +74,7 @@ const AddToCartButton = styled.TouchableOpacity`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: orange;
+  background-color: #D17842;
   width: 25px;
   height: 25px;
   border-radius: 5px;

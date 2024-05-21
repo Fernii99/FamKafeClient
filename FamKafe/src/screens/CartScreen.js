@@ -79,7 +79,7 @@ const ActionButtonTrash = styled.TouchableOpacity`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color:  red;
+    background-color:  #ba3a30;
     border-radius: 5px;
     margin-left: 3%;
     margin-right: 3%;
@@ -113,6 +113,7 @@ const CartScreen = () =>{
 
     useEffect(() => {
     }, [])
+
     useEffect(() => {
     }, [actualOrder])
 
@@ -130,20 +131,26 @@ const CartScreen = () =>{
         setActualOrder(updatedItems);
     };
 
-    const placeOrder =  () => {
+    const placeOrder = async () => {
         const orderDate = new Date();
 
         const newOrder = { "orderDate": orderDate.toString() , "_id": profileData._id, "products": actualOrder, "price": "19" }
-        console.log("newOrder");
-        console.log(newOrder);
-         const response = postNewOrder(newOrder);
+        const response = await postNewOrder(newOrder);
+        console.log(response.status);
+        
+        if(response.status === 201){
+            Alert.alert("ORDER PLACED SUCCESSFULLY");
+            setActualOrder([]);
+        }else{
+            Alert.alert("Order Failed, try again in few minutes");
+        }
          
     }
 
     return(
         <CartContainer >
             <ScrollView style={{display: 'flex', flex: 1, width: '100%' }} showsVerticalScrollIndicator={false} >
-                {actualOrder.map((item, index) => {
+                {actualOrder.map((item) => {
                     return(
                             <LinearGradient key={item._id} colors={['#262B33', '#262B33']}  start={{ x: 1, y: 0 }} end={{ x: 1, y: 1 }} style={{ width: '100%', marginBottom: '7%', padding:12, borderRadius: 15 }} >
                                 <ProductInformationContainer>
@@ -158,7 +165,7 @@ const CartScreen = () =>{
                                         <ProductName>{item.price} €</ProductName>
                                     </View>
                                     <View style={{display: 'flex', flexDirection: 'row'}}>
-                                        {item.amount === 0 ? 
+                                        {item.amount === 1 ? 
                                         <>
                                             <ActionButtonTrash onPress={() => {deleteItem(item.name)}} ><Icon name="trash" size={20} color="white" /></ActionButtonTrash>
                                             <ItemAmountCounter><Text style={{color: 'white'}}>{item.amount}</Text></ItemAmountCounter>
