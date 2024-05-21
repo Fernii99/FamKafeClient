@@ -1,10 +1,11 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Text, View, ScrollView, TouchableOpacity, Alert } from "react-native";
 import { Context } from "../../helpers/context/context";
 import styled from "styled-components";
 import LinearGradient from "react-native-linear-gradient";
 import Icon from 'react-native-vector-icons/Ionicons';
 import postNewOrder from "../helpers/axios/postNewOrder";
+import { act } from "react-test-renderer";
 
 const CartContainer = styled.View`
     width: 100%;
@@ -99,32 +100,45 @@ const MakeOrderButton = styled.TouchableOpacity`
     display: flex;
     align-items:center;
     justify-content: center;
-    width: 100%;
-    height: 7%;
+    width: 60%;
+    height: 100%;
     background-color: #D17842;
     bottom: 10px;
     border-radius: 100px;
+`
 
+const TotalOrderContainer = styled.View`
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 7%;
+    justify-content: space-between;
+`
+
+const TotalPriceText = styled.Text`
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
 `
 
 const CartScreen = () =>{
 
-    const {profileData, actualOrder, setActualOrder} = useContext(Context)
+    const { profileData, actualOrder, setActualOrder } = useContext(Context);
+    const [orderTotalPrice, setOrderTotalPrice] = useState("");
 
     useEffect(() => {
-    }, [])
+        setOrderTotalPrice(CalculateTotal(actualOrder));
+    }, [actualOrder]);
 
-    useEffect(() => {
-    }, [actualOrder])
+    const reduceAmount = (product) => {
+        const updatedItems = actualOrder.map(item => item.name === product ? { ...item, "amount": item.amount - 1 } : item);
+        setActualOrder(updatedItems);
+    };
 
-    const reduceAmount = (product) =>{
-        const updatedItems = actualOrder.map(item => item.name === product ? {...item, "amount" : item.amount-1} : item ) 
+    const increaseAmount = (product) => {
+        const updatedItems = actualOrder.map(item => item.name === product ? { ...item, "amount": item.amount + 1 } : item);
         setActualOrder(updatedItems);
-    }
-    const increaseAmount = (product) =>{
-        const updatedItems = actualOrder.map(item => item.name === product ? {...item, "amount" : item.amount+1} : item ) 
-        setActualOrder(updatedItems);
-    }
+    };
 
     const deleteItem = (product) => {
         const updatedItems = actualOrder.filter(item => item.name !== product);
@@ -133,19 +147,36 @@ const CartScreen = () =>{
 
     const placeOrder = async () => {
         const orderDate = new Date();
+        const totalPrice = CalculateTotal(actualOrder);
 
-        const newOrder = { "orderDate": orderDate.toString() , "_id": profileData._id, "products": actualOrder, "price": "19" }
+        const newOrder = {
+            "orderDate": orderDate,
+            "products": actualOrder,
+            "profileid": profileData._id,
+            "price": orderTotalPrice,
+            "status": "pending"
+        };
         const response = await postNewOrder(newOrder);
         console.log(response.status);
-        
-        if(response.status === 201){
+
+        if (response.status === 201) {
             Alert.alert("ORDER PLACED SUCCESSFULLY");
             setActualOrder([]);
-        }else{
+        } else {
             Alert.alert("Order Failed, try again in few minutes");
         }
-         
-    }
+    };
+
+    const CalculateTotal = (order) => {
+        const totalAmount = order.reduce((accumulator, product) => {
+            const price = parseFloat(product.price.replace(',', '.'));
+            return accumulator + (price * product.amount);
+        }, 0);
+
+        const roundedTotal = parseFloat(totalAmount.toFixed(3));
+
+        return roundedTotal;
+    };
 
     return(
         <CartContainer >
@@ -185,8 +216,10 @@ const CartScreen = () =>{
                     )
                 })}
             </ScrollView>
-            <MakeOrderButton onPress={ () => placeOrder() } ><Text> Realizar Pedido </Text></MakeOrderButton>
-
+            <TotalOrderContainer>
+                <TotalPriceText >Total: {orderTotalPrice}0 €</TotalPriceText>
+                <MakeOrderButton onPress={ () => placeOrder() } ><Text> Realizar Pedido </Text></MakeOrderButton>
+            </TotalOrderContainer>
         </CartContainer>
        
     )

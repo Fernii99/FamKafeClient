@@ -33,7 +33,9 @@ const OrderAmount = styled.View`
     width: 15px;
     height: 15px;
     border-radius: 15px;
-    background-color: #D17842;
+    background-color: ${(props => props.amount != 0 ? '#D17842' : "blue" )};
+    border: 2px solid;
+    border-color: #000;
 `
 const AmountText = styled.Text`
     font-size: 10px;
@@ -102,7 +104,7 @@ export default BottomNavigation = () =>{
                 tabBarIcon:({color}) => (
                     <>
                          <CartIcon><Icon name="bag" size={30} color={color}/></CartIcon>
-                        <OrderAmount><AmountText>{actualOrder.length}</AmountText></OrderAmount>
+                        <OrderAmount><AmountText amount={actualOrder.amount}>{actualOrder.length}</AmountText></OrderAmount>
                     </>
                   ), 
             }
