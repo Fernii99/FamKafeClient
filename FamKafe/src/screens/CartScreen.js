@@ -113,6 +113,8 @@ const TotalOrderContainer = styled.View`
     width: 100%;
     height: 7%;
     justify-content: space-between;
+    position: absolute;
+    bottom: 0px;
 `
 
 const TotalPriceText = styled.Text`
@@ -147,17 +149,18 @@ const CartScreen = () =>{
 
     const placeOrder = async () => {
         const orderDate = new Date();
+        const formatedDate = orderDate.toLocaleDateString("es-ES")
         const totalPrice = CalculateTotal(actualOrder);
 
         const newOrder = {
-            "orderDate": orderDate,
+            "orderDate": formatedDate,
             "products": actualOrder,
             "profileid": profileData._id,
-            "price": orderTotalPrice,
+            "price": totalPrice,
             "status": "pending"
         };
+
         const response = await postNewOrder(newOrder);
-        console.log(response.status);
 
         if (response.status === 201) {
             Alert.alert("ORDER PLACED SUCCESSFULLY");
@@ -178,8 +181,12 @@ const CartScreen = () =>{
         return roundedTotal;
     };
 
-    return(
-        <CartContainer >
+            
+            return (
+                
+            <CartContainer >
+            { actualOrder.length === 0 ? <><Icon name="cart-outline" size={35} color="#fff" /><Text style={{color: "white"}}>Cart is empty</Text></>: 
+
             <ScrollView style={{display: 'flex', flex: 1, width: '100%' }} showsVerticalScrollIndicator={false} >
                 {actualOrder.map((item) => {
                     return(
@@ -202,7 +209,6 @@ const CartScreen = () =>{
                                             <ItemAmountCounter><Text style={{color: 'white'}}>{item.amount}</Text></ItemAmountCounter>
                                             <ActionButton   onPress={() => {increaseAmount(item.name)}} ><ProductDescription> + </ProductDescription></ActionButton>
                                         </>
-
                                         :
                                         <>
                                             <ActionButton onPress={() => {reduceAmount(item.name)}} ><ProductDescription> - </ProductDescription></ActionButton>
@@ -216,14 +222,16 @@ const CartScreen = () =>{
                     )
                 })}
             </ScrollView>
+                }
             <TotalOrderContainer>
-                <TotalPriceText >Total: {orderTotalPrice}0 €</TotalPriceText>
+                <TotalPriceText >Total: {orderTotalPrice}€</TotalPriceText>
                 <MakeOrderButton onPress={ () => placeOrder() } ><Text> Realizar Pedido </Text></MakeOrderButton>
             </TotalOrderContainer>
         </CartContainer>
+            )
+    }
        
-    )
-}
+    
 
 
 

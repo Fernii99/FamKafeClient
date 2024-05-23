@@ -12,6 +12,8 @@ import HomePage from './src/screens/ProductsScreen';
 import ProfilePage from './src/screens/ProfilePage';
 import ProductScreen from './src/screens/ProductScreen';
 import getProducts from './src/helpers/axios/getAllProducts';
+import getAllOrders from './src/helpers/axios/getAllOrders';
+import getProfileOrders from './src/helpers/axios/getProfileOrders';
 
 
 function App(){
@@ -22,6 +24,8 @@ function App(){
   const [profileData, setProfileData] = useState("");
   const [allProducts, setAllProducts] = useState("");
   const [actualOrder, setActualOrder] = useState([]);
+  const [allOrders, setAllOrders] = useState("");
+  const [usersOrders, setUsersOrders] = useState("");
 
   useEffect(() => {
     console.log("initial load of the app")
@@ -30,6 +34,10 @@ function App(){
 
   const userDataSaved = async () =>{
     const userData = await getUserData();
+    const allOrders = await getAllOrders();
+    const userOrders = await getProfileOrders(userData._id);
+    
+    setAllOrders(allOrders);
 
     if(userData === null){
       loginVisible(true)
@@ -38,8 +46,9 @@ function App(){
       setLoginVisible(false)
       const productsList = await getProducts()
       setProfileData(userData);
-      console.log(productsList);
       setAllProducts(productsList);
+      setAllOrders(allOrders);
+      setUsersOrders(userOrders)
     }
   }
 
@@ -53,7 +62,7 @@ function App(){
 
   return (
     <SafeAreaView style={{backgroundColor:'#0C0F14', flex:1}}>
-      <Context.Provider value={{ userLogged, setUserLogged, setLoginVisible, filterValue, setFilterValue, setAllProducts, allProducts, actualOrder, setActualOrder, profileData }}>
+      <Context.Provider value={{ userLogged, setUserLogged, setLoginVisible, filterValue, setFilterValue, setAllProducts, allProducts, actualOrder, setActualOrder, profileData, allOrders, usersOrders, setUsersOrders }}>
         <View style={{position: "relative", top: 0, left: 0, width: '100%', height: 50, backgroundColor: 'transparent'}}>
         </View>
           <Modal

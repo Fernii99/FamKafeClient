@@ -11,12 +11,7 @@ import styled from 'styled-components';
 import { Context } from '../../helpers/context/context.js';
 import { useContext } from 'react';
 
-
-
-
 const Tab = createBottomTabNavigator();
-
-
 
 const CartIcon = styled.View`
     padding-top: 15px;
@@ -64,21 +59,7 @@ export default BottomNavigation = () =>{
                 },
                 
                 }}>
-        <Tab.Screen name="ProfilePage" 
-            component={ProfilePage} 
-            options={{
-                tabBarItemStyle: {
-                    TabBarLabel: 'none',
-                    height: 70,
-                },     
-                tabBarShowLabel: false,
-                tabBarActiveTintColor: '#D17842',
-                tabBarIcon: ({color}) => { return (
-                    
-                    <Icon name="person" size={30} color={color} />)}
-                }}
-        />
-        <Tab.Screen  name="HomePage" 
+             <Tab.Screen  name="HomePage" 
             component={HomePage} 
             options={{
                 tabBarItemStyle: {
@@ -92,6 +73,20 @@ export default BottomNavigation = () =>{
                 <Icon name="list" size={35} color={color} />)}
             }}
         />
+            <Tab.Screen name="ProfilePage" 
+                component={ProfilePage} 
+                options={{
+                    tabBarItemStyle: {
+                        TabBarLabel: 'none',
+                        height: 70,
+                    },     
+                    tabBarShowLabel: false,
+                    tabBarActiveTintColor: '#D17842',
+                    tabBarIcon: ({color}) => { return (
+                        <Icon name="person" size={30} color={color} />)}
+                    }}
+            />
+           
         <Tab.Screen  name="CartScreen" 
             component={CartScreen} 
             options={{
@@ -103,7 +98,7 @@ export default BottomNavigation = () =>{
                 tabBarActiveTintColor: '#D17842',
                 tabBarIcon:({color}) => (
                     <>
-                         <CartIcon><Icon name="bag" size={30} color={color}/></CartIcon>
+                         <CartIcon><Icon name="cart-outline" size={30} color={color}/></CartIcon>
                         <OrderAmount><AmountText amount={actualOrder.amount}>{actualOrder.length}</AmountText></OrderAmount>
                     </>
                   ), 
