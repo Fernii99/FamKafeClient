@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { View,Text, ScrollView, Image } from "react-native";
+import { View,Text, ScrollView, Image, Alert } from "react-native";
 import { Context } from "../../helpers/context/context";
 import LinearGradient from "react-native-linear-gradient";
 
@@ -51,14 +51,23 @@ const ProductAmount = styled.Text`
 
     const {pendingOrders} = useContext(Context);
 
+    useEffect(() => {
+
+    }, [pendingOrders])
+
     const updateOrder = async(orderId) =>{
 
         console.log("orderId");
         console.log(orderId);
 
         const updateOrder = await UpdateOrder(orderId);
-        console.log(updateOrder);
-        
+
+        if(updateOrder.status === "OK"){
+             Alert.alert("Order Updated Complete")
+        }else{
+             Alert.alert("Problem Ocurred while updating the order, try again please")
+        }
+
     }
 
     return(
