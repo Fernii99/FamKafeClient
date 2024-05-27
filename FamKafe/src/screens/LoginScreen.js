@@ -52,12 +52,18 @@ function LoginScreen() {
             await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
             // Get the users ID token
             const { idToken } = await GoogleSignin.signIn();
+            console.log("idToken FISRT TIME ON GOOGLE CLICK")
+            console.log(idToken)
 
             // Create a Google credential with the token
             const googleCredential = await auth.GoogleAuthProvider.credential(idToken);
-            
+            console.log("GOOGLECREDENTIAL FISRT TIME ON GOOGLE CLICK")
+            console.log(googleCredential)
+
             // Sign-in the user with the credential
             const idTokenResult = await auth().currentUser.getIdTokenResult(googleCredential);
+            console.log("IDtokenresult FISRT TIME ON GOOGLE CLICK")
+            console.log(idTokenResult)
 
 
             await axios.post("http://localhost:3000/users/login", {

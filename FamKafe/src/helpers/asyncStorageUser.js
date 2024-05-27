@@ -21,7 +21,6 @@ const storeUserData = async (value) => {
     }
   };
  
- 
   const removeUserData = async () => {
     try {
       await AsyncStorage.removeItem('user');

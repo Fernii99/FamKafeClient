@@ -8,6 +8,9 @@ import CartScreen from '../screens/CartScreen.js';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styled from 'styled-components';
 
+import PendingOrders from '../screens/PendingOrders.js';
+
+
 import { Context } from '../../helpers/context/context.js';
 import { useContext } from 'react';
 
@@ -40,10 +43,7 @@ const AmountText = styled.Text`
 
 
 export default BottomNavigation = () =>{
-    const {actualOrder} = useContext(Context)
-
-    console.log("actualOrder NAVIGATION");
-    console.log(actualOrder.length);
+    const {actualOrder, profileData} = useContext(Context)
 
     useEffect(() => {
 
@@ -59,22 +59,11 @@ export default BottomNavigation = () =>{
                 },
                 
                 }}>
-             <Tab.Screen  name="HomePage" 
-            component={HomePage} 
-            options={{
-                tabBarItemStyle: {
-                    tabBarLabel: false,
-                    height: 70,
-                },     
-                tabBarShowLabel: false,
-                tabBarActiveTintColor: '#D17842',
-                tabBarIcon: ({color}) => { return (
-                    
-                <Icon name="list" size={35} color={color} />)}
-            }}
-        />
-            <Tab.Screen name="ProfilePage" 
-                component={ProfilePage} 
+        {
+            profileData.email === "asier.fernandez@ikasle.aeg.eus" ? 
+            <>
+            <Tab.Screen name="PendingOrders" 
+                component={PendingOrders} 
                 options={{
                     tabBarItemStyle: {
                         TabBarLabel: 'none',
@@ -86,25 +75,61 @@ export default BottomNavigation = () =>{
                         <Icon name="person" size={30} color={color} />)}
                     }}
             />
+        </>
+        :
+        <>
+            <Tab.Screen  name="HomePage" 
+                component={HomePage} 
+                options={{
+                    tabBarItemStyle: {
+                        tabBarLabel: false,
+                        height: 70,
+                    },     
+                    tabBarShowLabel: false,
+                    tabBarActiveTintColor: '#D17842',
+                    tabBarIcon: ({color}) => { return (
+                        
+                    <Icon name="list" size={35} color={color} />)}
+                }}
+            />
+            <Tab.Screen  name="Profile" 
+                component={ProfilePage} 
+                options={{
+                    tabBarItemStyle: {
+                        tabBarLabel: false,
+                        height: 70,
+                    },     
+                    tabBarShowLabel: false,
+                    tabBarActiveTintColor: '#D17842',
+                    tabBarIcon: ({color}) => { return (
+                        
+                    <Icon name="person" size={35} color={color} />)}
+                }}
+            />
            
-        <Tab.Screen  name="CartScreen" 
-            component={CartScreen} 
-            options={{
-                tabBarItemStyle: {
-                    tabBarLabel: false,
-                    height: 70,
-                },     
-                tabBarShowLabel: false,
-                tabBarActiveTintColor: '#D17842',
-                tabBarIcon:({color}) => (
-                    <>
-                         <CartIcon><Icon name="cart-outline" size={30} color={color}/></CartIcon>
-                        <OrderAmount><AmountText amount={actualOrder.amount}>{actualOrder.length}</AmountText></OrderAmount>
-                    </>
-                  ), 
-            }
-        }
-        />
+            <Tab.Screen  name="CartScreen" 
+                component={CartScreen} 
+                options={{
+                    tabBarItemStyle: {
+                        tabBarLabel: false,
+                        height: 70,
+                    },     
+                    tabBarShowLabel: false,
+                    tabBarActiveTintColor: '#D17842',
+                    tabBarIcon:({color}) => (
+                        <>
+                            <CartIcon>
+                                <Icon name="cart-outline" size={30} color={color}/>
+                            </CartIcon>
+                            <OrderAmount>
+                                <AmountText amount={actualOrder.amount}>{actualOrder.length}</AmountText></OrderAmount>
+                        </>
+                    ), 
+                }}
+            />
+    </>
+    }            
+
     </Tab.Navigator>
     
 

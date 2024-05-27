@@ -142,7 +142,13 @@ const ProfilePage = () =>{
             <ProfileBadgesContainer>
                 <ProfileText>Pedidos realizados: </ProfileText>
                 <ScrollView style={{display: 'flex', flex: 1, width: '100%' }}>
-                    {usersOrders.data.map((item) => {
+                    {
+                        usersOrders.length === "" ? 
+                       <>
+                       </>
+                    :
+                    <>
+                    {usersOrders.map((item) => {
                         return(
                             <OrderContainer key={item._id}>
                                 
@@ -157,7 +163,7 @@ const ProfilePage = () =>{
                                         Total amount
                                     </OrderInfoTextWhite>
                                     <OrderInfoTextRed>
-                                         {item.price} €
+                                        {item.price} €
                                     </OrderInfoTextRed>
                                     </View>
                                     
@@ -166,7 +172,7 @@ const ProfilePage = () =>{
                                         return(
                                             <OrderProductInformation key={product._id}>
                                                 <ProductImageContainer>
-                                                   <ProductImage source={{uri: (product.image)}} ></ProductImage>
+                                                <ProductImage source={{uri: (product.image)}} ></ProductImage>
                                                 </ProductImageContainer>
                                                 <ProductTextsContainer>
                                                 <ProductText>{product.name} </ProductText>
@@ -184,6 +190,8 @@ const ProfilePage = () =>{
 
                         )
                     })}
+                </> 
+                    }
                 </ScrollView>
                     
                 </ProfileBadgesContainer>

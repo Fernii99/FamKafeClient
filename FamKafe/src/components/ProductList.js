@@ -110,7 +110,7 @@ export default ProductList = () => {
    }
 
   const categories = [
-    "coffees"
+    "coffees",
   ];
 
   return (
@@ -153,12 +153,13 @@ export default ProductList = () => {
                 )}
                 keyExtractor={item => item}
                 />
-                 <Modal  animationType="slide"
-                            transparent={false}
-                            visible={productModalVisible}
-                           > 
-                            <ProductScreen item={selectedProduct} setProductModalVisible={setProductModalVisible} />
-                          </Modal>
+                  <Modal  
+                    animationType="slide"
+                    transparent={false}
+                    visible={productModalVisible}
+                  >
+                    <ProductScreen item={selectedProduct} setProductModalVisible={setProductModalVisible} />
+                  </Modal>
                 </ProductsContainer>
 
               
