@@ -14,9 +14,10 @@ const PageContainer = styled.View`
     display: flex;
 `
 const Title = styled.Text`
+    margin-bottom: 20px;
     margin-left: 5%;
-    width: 60%;
-    font-size: 35px;
+    width: 100%;
+    font-size: 30px;
     color: white;
     font-weight: bold;
 `
@@ -25,8 +26,7 @@ const ProductsScreen = ()=> {
     
     return( 
         <ScrollView style={{flex: 1, backgroundColor:"#0C0F14"}}>
-        <Title>Find the best coffee for you</Title>
-        <InputField />
+        <Title>What are you looking for</Title>
         <PageContainer>
             <ProductList />
         </PageContainer>

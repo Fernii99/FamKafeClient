@@ -122,75 +122,90 @@ const ProductText = styled.Text`
     flex-wrap: wrap;
 `
 
+const NoOrdersMessage = styled.Text` 
+font-size: 25px;
+color: white;
+`
+
 
 
 
 const ProfilePage = () =>{
 
     const { profileData, usersOrders } = useContext(Context);
+    
+    useEffect(()=>{
+        console.log("+`+`+``+`+`+`+`+`+`+`+`+`+`+`++`+`+`+`++`+`+`+`+`+`+`+`+`+`+")
+        console.log("+`+`+``+`+`+`+`+`+`+`+`+`+`+`++`+`+`+`++`+`+`+`+`+`+`+`+`+`+")
+        console.log(usersOrders)
+        console.log("+`+`+``+`+`+`+`+`+`+`+`+`+`+`++`+`+`+`++`+`+`+`+`+`+`+`+`+`+")
+        console.log("+`+`+``+`+`+`+`+`+`+`+`+`+`+`++`+`+`+`++`+`+`+`+`+`+`+`+`+`+")
+    }, [])
+
 
     return(
         <ProfileContainer>
             <NameContainer>
-            <ProfileText> {profileData.name} </ProfileText>
+            <ProfileText> {profileData.email} </ProfileText>
             </NameContainer>
             <ProfilePictureBadgesContainer>
             <ProfilePictureContainer>
-                    <ProfilePicture source={{uri: profileData.image }} />
+                    <ProfilePicture source={{uri: profileData[0].image }} />
                 </ProfilePictureContainer>
             </ProfilePictureBadgesContainer>
             <ProfileBadgesContainer>
                 <ProfileText>Pedidos realizados: </ProfileText>
                 <ScrollView style={{display: 'flex', flex: 1, width: '100%' }}>
                     {
-                        usersOrders.length === "" ? 
-                       <>
-                       </>
-                    :
-                    <>
-                    {usersOrders.map((item) => {
-                        return(
-                            <OrderContainer key={item._id}>
-                                
-                                
-                                <LinearGradient  colors={['rgba(255, 255, 255, 0.1)', 'rgba(12, 15, 20, 0.1)']}  start={{ x: 1, y: 0 }} end={{ x: 0.2, y: 0.9 }} style={{ width: '100%', marginBottom: '7%', paddingHorizontal:12, borderRadius: 10 }} >
-                                <DateTotalContainer>
-                                    <OrderInfoTextWhite>
-                                        Order Date  {item.orderDate}
-                                    </OrderInfoTextWhite>
-                                    <View>
-                                    <OrderInfoTextWhite>
-                                        Total amount
-                                    </OrderInfoTextWhite>
-                                    <OrderInfoTextRed>
-                                        {item.price} €
-                                    </OrderInfoTextRed>
-                                    </View>
+                        usersOrders.length >= 1 ? 
+                        <>
+                        {usersOrders.data.map((item) => {
+                            return(
+                                <OrderContainer key={item._id}>
                                     
-                                </DateTotalContainer>
-                                    {item.products.map( (product) =>{
-                                        return(
-                                            <OrderProductInformation key={product._id}>
-                                                <ProductImageContainer>
-                                                <ProductImage source={{uri: (product.image)}} ></ProductImage>
-                                                </ProductImageContainer>
-                                                <ProductTextsContainer>
-                                                <ProductText>{product.name} </ProductText>
-                                                <ProductText> x {product.amount} </ProductText>
-                                                <ProductText>{product.price} € </ProductText>
-                                                </ProductTextsContainer>
-                                                
-                                            </OrderProductInformation>
-                                        )
-
-                                    })}
-                                
-                                </LinearGradient>
-                            </OrderContainer>
-
-                        )
-                    })}
-                </> 
+                                    
+                                    <LinearGradient  colors={['rgba(255, 255, 255, 0.1)', 'rgba(12, 15, 20, 0.1)']}  start={{ x: 1, y: 0 }} end={{ x: 0.2, y: 0.9 }} style={{ width: '100%', marginBottom: '7%', paddingHorizontal:12, borderRadius: 10 }} >
+                                    <DateTotalContainer>
+                                        <OrderInfoTextWhite>
+                                            Order Date {item.orderDate}
+                                        </OrderInfoTextWhite>
+                                        <View>
+                                        <OrderInfoTextWhite>
+                                            Total amount
+                                        </OrderInfoTextWhite>
+                                        <OrderInfoTextRed>
+                                            {item.price} €
+                                        </OrderInfoTextRed>
+                                        </View>
+                                        
+                                    </DateTotalContainer>
+                                        {item.products.map( (product) =>{
+                                            return(
+                                                <OrderProductInformation key={product._id}>
+                                                    <ProductImageContainer>
+                                                    <ProductImage source={{uri: (product.image)}} ></ProductImage>
+                                                    </ProductImageContainer>
+                                                    <ProductTextsContainer>
+                                                    <ProductText>{product.name} </ProductText>
+                                                    <ProductText> x {product.amount} </ProductText>
+                                                    <ProductText>{product.price} € </ProductText>
+                                                    </ProductTextsContainer>
+                                                    
+                                                </OrderProductInformation>
+                                            )
+        
+                                        })}
+                                    
+                                    </LinearGradient>
+                                </OrderContainer>
+        
+                            )
+                        })}
+                        </>                 
+                    :
+                        <>
+                            <NoOrdersMessage> There are no Orders yet</NoOrdersMessage>
+                        </>
                     }
                 </ScrollView>
                     

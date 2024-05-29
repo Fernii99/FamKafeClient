@@ -40,7 +40,7 @@ const GoogleButton = styled.TouchableOpacity`
 
 function LoginScreen() {
 
-    const { setLoginVisible } = useContext(Context)
+    const { setLogged, setLoginVisible, setProfileData } = useContext(Context)
 
     GoogleSignin.configure({
         webClientId: '811480831851-ic2jfgl63lucfv9kcokchc9d94pati55.apps.googleusercontent.com',
@@ -50,33 +50,56 @@ function LoginScreen() {
         try{
             // Check if your device supports Google Play
             await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+            console.log("PLAY SERVICES CHECKED");
+
             // Get the users ID token
             const { idToken } = await GoogleSignin.signIn();
-            console.log("idToken FISRT TIME ON GOOGLE CLICK")
+
+            console.log(`**************************************************************************`)
+            console.log(`ID TOKEN`)
+            console.log(`--------`)
             console.log(idToken)
 
             // Create a Google credential with the token
-            const googleCredential = await auth.GoogleAuthProvider.credential(idToken);
-            console.log("GOOGLECREDENTIAL FISRT TIME ON GOOGLE CLICK")
-            console.log(googleCredential)
+            const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+            console.log(`**************************************************************************`)
+            console.log(`GOOGLECREDENTIAL`)
+            console.log(`----------------`)
+            console.log(googleCredential);
+            console.log(`**************************************************************************`)
+
+            const signInWithCredential = await auth().signInWithCredential(googleCredential);
+  
+            console.log("SIGNINWITHCREDENTIAL")
+            console.log(signInWithCredential);
+
 
             // Sign-in the user with the credential
-            const idTokenResult = await auth().currentUser.getIdTokenResult(googleCredential);
+            const idTokenResult = await auth().currentUser.getIdTokenResult();
             console.log("IDtokenresult FISRT TIME ON GOOGLE CLICK")
             console.log(idTokenResult)
 
 
             await axios.post("http://localhost:3000/users/login", {
-                idToken: idTokenResult.token
+                "idToken": idTokenResult.token
             })
             .then( async function (response) {
-                console.log("idTokenResult")
-            console.log(idTokenResult)
-                const profileData = response.data.data[0]
-                await storeUserData(profileData);
-                setLoginVisible(false)
+                const profileInformation = response.data.data;
+                console.log("profileDataprofileDataprofileDataprofileDataprofileDataprofileDataprofileDataprofileDataprofileData")
+                console.log("profileDataprofileDataprofileDataprofileDataprofileDataprofileDataprofileDataprofileDataprofileData")
+                console.log("profileDataprofileDataprofileDataprofileDataprofileDataprofileDataprofileDataprofileDataprofileData")
+                console.log("profileDataprofileDataprofileDataprofileDataprofileDataprofileDataprofileDataprofileDataprofileData")
+                console.log(profileInformation)
+                console.log("profileDataprofileDataprofileDataprofileDataprofileDataprofileDataprofileDataprofileDataprofileData")
+                console.log("profileDataprofileDataprofileDataprofileDataprofileDataprofileDataprofileDataprofileDataprofileData")
+                console.log("profileDataprofileDataprofileDataprofileDataprofileDataprofileDataprofileDataprofileDataprofileData")
+
+                await setProfileData(profileInformation);
+                await storeUserData(profileInformation);  
+                setModal(profileInformation);
+                setLogged(true)
             })
-              .catch(function (error) {
+            .catch(function (error) {
                 console.log("LOGIN CALL TO SERVER RESPONSE ON .CATCH")
                 console.log(error);
               });
@@ -86,6 +109,15 @@ function LoginScreen() {
         }
       }
       
+      async function setModal(data){
+
+        if(data != null){
+          setLoginVisible(false);
+        };
+    
+    }
+
+
     return( 
         <View style={{ flex: 1, alignItems: "center", justifyContent: "center"}}>
             <LogoImage source={Logo}/>
