@@ -3,6 +3,7 @@ import axios from "axios";
 
 export default getProfileOrders = async (userId) =>{
 
+    console.log(userId)
     
     try{
         const response = await axios.get(`http://localhost:3000/orders/${userId}`); 

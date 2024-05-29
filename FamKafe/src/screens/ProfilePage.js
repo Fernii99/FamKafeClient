@@ -133,20 +133,11 @@ color: white;
 const ProfilePage = () =>{
 
     const { profileData, usersOrders } = useContext(Context);
-    
-    useEffect(()=>{
-        console.log("+`+`+``+`+`+`+`+`+`+`+`+`+`+`++`+`+`+`++`+`+`+`+`+`+`+`+`+`+")
-        console.log("+`+`+``+`+`+`+`+`+`+`+`+`+`+`++`+`+`+`++`+`+`+`+`+`+`+`+`+`+")
-        console.log(usersOrders)
-        console.log("+`+`+``+`+`+`+`+`+`+`+`+`+`+`++`+`+`+`++`+`+`+`+`+`+`+`+`+`+")
-        console.log("+`+`+``+`+`+`+`+`+`+`+`+`+`+`++`+`+`+`++`+`+`+`+`+`+`+`+`+`+")
-    }, [])
-
 
     return(
         <ProfileContainer>
             <NameContainer>
-            <ProfileText> {profileData.email} </ProfileText>
+            <ProfileText> {profileData[0].name} </ProfileText>
             </NameContainer>
             <ProfilePictureBadgesContainer>
             <ProfilePictureContainer>
@@ -157,7 +148,7 @@ const ProfilePage = () =>{
                 <ProfileText>Pedidos realizados: </ProfileText>
                 <ScrollView style={{display: 'flex', flex: 1, width: '100%' }}>
                     {
-                        usersOrders.length >= 1 ? 
+                        usersOrders.length != 0 ? 
                         <>
                         {usersOrders.data.map((item) => {
                             return(

@@ -59,19 +59,22 @@ function App(){
 
     const manageLoggedLogin = async ()=>{
       const localUserData = await getUserData();
-      setProfileData(localUserData);
+      await setProfileData(localUserData);
       await storeUserData(localUserData);
     }
 
 
     const loadProducts = async () => {
       const productsData = await getProducts();
-      setAllProducts(productsData);
+      await setAllProducts(productsData);
     }
 
     const loadUserOrders = async () => {
-      const usersOrders = await getProfileOrders();
-      setUsersOrders(usersOrders);
+      console.log("LoadUSERORDERSLoadUSERORDERSLoadUSERORDERSLoadUSERORDERSLoadUSERORDERSLoadUSERORDERSLoadUSERORDERS")
+      console.log(profileData)
+      console.log("LoadUSERORDERSLoadUSERORDERSLoadUSERORDERSLoadUSERORDERSLoadUSERORDERSLoadUSERORDERSLoadUSERORDERS")
+      const usersOrders = await getProfileOrders(profileData[0]._id);
+      await setUsersOrders(usersOrders);
     }
 
 
@@ -79,8 +82,6 @@ function App(){
       const retrievedPendingOrders = await getPendingOrders();
       await setPendingOrders(retrievedPendingOrders);
     }
-
-    
 
     const load = async()=>{
 
