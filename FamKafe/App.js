@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { SafeAreaView, Modal, View} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import BottomNavigation from './src/components/BottomNavigation';
 
 import { Context } from './helpers/context/context';
 import { getUserData, storeUserData, removeUserData } from './src/helpers/asyncStorageUser';
@@ -15,94 +14,118 @@ import getProfileOrders from './src/helpers/axios/getProfileOrders';
 
 import getPendingOrders from './src/helpers/axios/getPendingOrders';
 
+import BootSplash from "react-native-bootsplash";
+import BottomNavigation from './src/components/BottomNavigation';
 
 function App(){
 
+  const [ isDataLoaded, setIsDataLoaded] = useState(false);
+  const [isLogged, setLogged] = useState(false);
   const [userLogged, setUserLogged ] = useState(false);
   const [loginVisible, setLoginVisible] = useState(true);
   const [filterValue, setFilterValue ] = useState("");
-  const [profileData, setProfileData] = useState("");
+  const [profileData, setProfileData] = useState(null);
   const [allProducts, setAllProducts] = useState("");
   const [actualOrder, setActualOrder] = useState([]);
   const [allOrders, setAllOrders] = useState("");
-  const [usersOrders, setUsersOrders] = useState("");
+  const [usersOrders, setUsersOrders] = useState([]);
   const [pendingOrders, setPendingOrders] = useState([]);
 
   useEffect(() => {
-    console.log("initial load of the app")
-    userDataSaved();
+    
+      const init = async () => {
+      };
+  
+      init().finally(async () => {
+        console.log("Loading...")
+        await manageSession();
+        await BootSplash.hide({ fade: true });
+        console.log("BootSplash has been hidden successfully");
+      });
+    
   }, [])
 
-  const userDataSaved = async () =>{
-    const userData = await getUserData();
-    console.log("USERDATA ++++++++++++++++++++")
-    console.log(userData)
-
+  const manageSession = async () =>{
+    userData = await getUserData();
     if(userData === null){
       await setLoginVisible(true)
     }
     else{
-      await setProfileData(userData);
-      console.log("userData")
-      console.log(userData)
-
-      const productsList = await getProducts();
-      await setAllProducts(productsList);
-
-      console.log("productsList 676767676767676767676767676776767676")
-      console.log(productsList);
-
-
-      const allOrders = await getAllOrders();
-      await setAllOrders(allOrders);
-
-      console.log("allOrders 98989898989898989898989898989")
-      console.log(allOrders)
-      console.log()
-      const userOrders = await getProfileOrders(profileData._id);
-      await setUsersOrders(userOrders);
-
-      console.log("user ORDERS ç´ç´ç´ç´ç´ç´ç´çç´ç´ç´ç´ç´ç´ç´ç´ç´ç´ç´ç´")
-      console.log(userOrders)
-console.log()
-      const retrievedPendingOrders = await getPendingOrders();
-      await setPendingOrders(retrievedPendingOrders);
-      console.log("RETRIEVED PENDING ORDERS FOR THE ADMIN -----------------------.-----------")
-      console.log(pendingOrders);
-      console.log()
-
-
-      await setLoginVisible(false);
-      
+     setLogged(true)
     }
   }
 
-  
+  useEffect( () => {
 
-  const globalStateHandler = (data) =>{
-    setGlobalState( globalState => ({
-      ...globalState,
-      ...data
-    }));
-  }
+    const manageLoggedLogin = async ()=>{
+      const localUserData = await getUserData();
+      setProfileData(localUserData);
+      await storeUserData(localUserData);
+    }
+
+
+    const loadProducts = async () => {
+      const productsData = await getProducts();
+      setAllProducts(productsData);
+    }
+
+    const loadUserOrders = async () => {
+      const usersOrders = await getProfileOrders();
+      setUsersOrders(usersOrders);
+    }
+
+
+    const loadPendingOrders = async () => {
+      const retrievedPendingOrders = await getPendingOrders();
+      await setPendingOrders(retrievedPendingOrders);
+    }
+
+    
+
+    const load = async()=>{
+
+      await manageLoggedLogin();
+      await loadProducts();
+      await loadUserOrders();
+      await loadPendingOrders();
+      
+      setIsDataLoaded(true)
+    }
+  
+    if(isLogged){
+      load();
+      setLoginVisible(false);
+    }
+
+  }, [isLogged]) 
+
+
 
 
   return (
     <SafeAreaView style={{backgroundColor:'#0C0F14', flex:1}}>
-      <Context.Provider value={{ userLogged, setUserLogged, setLoginVisible, filterValue, setFilterValue, setAllProducts, allProducts, actualOrder, setActualOrder, profileData, allOrders, usersOrders, setUsersOrders, pendingOrders, setPendingOrders }}>
-        <View style={{position: "relative", top: 0, left: 0, width: '100%', height: 50, backgroundColor: 'transparent'}}>
-        </View>
+      <Context.Provider value={{ isLogged, setLogged, setLoginVisible, filterValue, setFilterValue, setProfileData, setAllProducts, allProducts, actualOrder, setActualOrder, profileData, allOrders, usersOrders, setUsersOrders, pendingOrders, setPendingOrders }}>
           <Modal
             visible={loginVisible}
           >
             <LoginScreen/>
           </Modal>
-          <NavigationContainer>
-            <BottomNavigation />
-          </NavigationContainer>
+          {
+            profileData === null ? 
+             null
+            :
+            <NavigationContainer>
+              <BottomNavigation/>
+            </NavigationContainer>
+          }
+          
       </Context.Provider>
     </SafeAreaView>
   );
 }
 
 export default App;
+
+
+
+
