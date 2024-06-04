@@ -137,7 +137,7 @@ const ProfilePage = () =>{
     useEffect(()=>{
         console.log("+`+`+``+`+`+`+`+`+`+`+`+`+`+`++`+`+`+`++`+`+`+`+`+`+`+`+`+`+")
         console.log("+`+`+``+`+`+`+`+`+`+`+`+`+`+`++`+`+`+`++`+`+`+`+`+`+`+`+`+`+")
-        console.log(usersOrders)
+        console.log(usersOrders.length)
         console.log("+`+`+``+`+`+`+`+`+`+`+`+`+`+`++`+`+`+`++`+`+`+`+`+`+`+`+`+`+")
         console.log("+`+`+``+`+`+`+`+`+`+`+`+`+`+`++`+`+`+`++`+`+`+`+`+`+`+`+`+`+")
     }, [])
@@ -146,7 +146,7 @@ const ProfilePage = () =>{
     return(
         <ProfileContainer>
             <NameContainer>
-            <ProfileText> {profileData.email} </ProfileText>
+            <ProfileText> {profileData[0].email} </ProfileText>
             </NameContainer>
             <ProfilePictureBadgesContainer>
             <ProfilePictureContainer>
@@ -157,7 +157,7 @@ const ProfilePage = () =>{
                 <ProfileText>Pedidos realizados: </ProfileText>
                 <ScrollView style={{display: 'flex', flex: 1, width: '100%' }}>
                     {
-                        usersOrders.length >= 1 ? 
+                        usersOrders.length != [] ? 
                         <>
                         {usersOrders.data.map((item) => {
                             return(
