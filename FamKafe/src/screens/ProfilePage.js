@@ -133,11 +133,27 @@ color: white;
 const ProfilePage = () =>{
 
     const { profileData, usersOrders } = useContext(Context);
+<<<<<<< HEAD
+=======
+    
+    useEffect(()=>{
+        console.log("+`+`+``+`+`+`+`+`+`+`+`+`+`+`++`+`+`+`++`+`+`+`+`+`+`+`+`+`+")
+        console.log("+`+`+``+`+`+`+`+`+`+`+`+`+`+`++`+`+`+`++`+`+`+`+`+`+`+`+`+`+")
+        console.log(usersOrders.length)
+        console.log("+`+`+``+`+`+`+`+`+`+`+`+`+`+`++`+`+`+`++`+`+`+`+`+`+`+`+`+`+")
+        console.log("+`+`+``+`+`+`+`+`+`+`+`+`+`+`++`+`+`+`++`+`+`+`+`+`+`+`+`+`+")
+    }, [])
+
+>>>>>>> PendingOrders
 
     return(
         <ProfileContainer>
             <NameContainer>
+<<<<<<< HEAD
             <ProfileText> {profileData[0].name} </ProfileText>
+=======
+            <ProfileText> {profileData[0].email} </ProfileText>
+>>>>>>> PendingOrders
             </NameContainer>
             <ProfilePictureBadgesContainer>
             <ProfilePictureContainer>
@@ -148,7 +164,11 @@ const ProfilePage = () =>{
                 <ProfileText>Pedidos realizados: </ProfileText>
                 <ScrollView style={{display: 'flex', flex: 1, width: '100%' }}>
                     {
+<<<<<<< HEAD
                         usersOrders.length != 0 ? 
+=======
+                        usersOrders.length != [] ? 
+>>>>>>> PendingOrders
                         <>
                         {usersOrders.data.map((item) => {
                             return(

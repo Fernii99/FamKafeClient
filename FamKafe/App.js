@@ -19,7 +19,6 @@ import BottomNavigation from './src/components/BottomNavigation';
 
 function App(){
 
-  const [ isDataLoaded, setIsDataLoaded] = useState(false);
   const [isLogged, setLogged] = useState(false);
   const [userLogged, setUserLogged ] = useState(false);
   const [loginVisible, setLoginVisible] = useState(true);
@@ -60,15 +59,18 @@ function App(){
     const manageLoggedLogin = async ()=>{
       const localUserData = await getUserData();
       await setProfileData(localUserData);
+<<<<<<< HEAD
       await storeUserData(localUserData);
+=======
+>>>>>>> PendingOrders
     }
-
 
     const loadProducts = async () => {
       const productsData = await getProducts();
       await setAllProducts(productsData);
     }
 
+<<<<<<< HEAD
     const loadUserOrders = async () => {
       console.log("LoadUSERORDERSLoadUSERORDERSLoadUSERORDERSLoadUSERORDERSLoadUSERORDERSLoadUSERORDERSLoadUSERORDERS")
       console.log(profileData)
@@ -78,19 +80,30 @@ function App(){
     }
 
 
+=======
+>>>>>>> PendingOrders
     const loadPendingOrders = async () => {
       const retrievedPendingOrders = await getPendingOrders();
       await setPendingOrders(retrievedPendingOrders);
     }
 
+<<<<<<< HEAD
     const load = async()=>{
+=======
+    const loadUserOrders = async () => {
+      const localUserData = await getUserData();
+      const usersOrders = await getProfileOrders(localUserData[0]._id);
+      await setUsersOrders(usersOrders);
+    }
+
+    const load = async ()=>{
+>>>>>>> PendingOrders
 
       await manageLoggedLogin();
       await loadProducts();
       await loadUserOrders();
       await loadPendingOrders();
       
-      setIsDataLoaded(true)
     }
   
     if(isLogged){
@@ -98,8 +111,14 @@ function App(){
       setLoginVisible(false);
     }
 
+    
+
   }, [isLogged]) 
 
+
+  useEffect(() => {
+      
+  },[profileData])
 
 
 
