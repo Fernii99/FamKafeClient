@@ -59,10 +59,7 @@ function App(){
     const manageLoggedLogin = async ()=>{
       const localUserData = await getUserData();
       await setProfileData(localUserData);
-<<<<<<< HEAD
       await storeUserData(localUserData);
-=======
->>>>>>> PendingOrders
     }
 
     const loadProducts = async () => {
@@ -70,26 +67,11 @@ function App(){
       await setAllProducts(productsData);
     }
 
-<<<<<<< HEAD
-    const loadUserOrders = async () => {
-      console.log("LoadUSERORDERSLoadUSERORDERSLoadUSERORDERSLoadUSERORDERSLoadUSERORDERSLoadUSERORDERSLoadUSERORDERS")
-      console.log(profileData)
-      console.log("LoadUSERORDERSLoadUSERORDERSLoadUSERORDERSLoadUSERORDERSLoadUSERORDERSLoadUSERORDERSLoadUSERORDERS")
-      const usersOrders = await getProfileOrders(profileData[0]._id);
-      await setUsersOrders(usersOrders);
-    }
-
-
-=======
->>>>>>> PendingOrders
     const loadPendingOrders = async () => {
       const retrievedPendingOrders = await getPendingOrders();
       await setPendingOrders(retrievedPendingOrders);
     }
 
-<<<<<<< HEAD
-    const load = async()=>{
-=======
     const loadUserOrders = async () => {
       const localUserData = await getUserData();
       const usersOrders = await getProfileOrders(localUserData[0]._id);
@@ -97,7 +79,6 @@ function App(){
     }
 
     const load = async ()=>{
->>>>>>> PendingOrders
 
       await manageLoggedLogin();
       await loadProducts();
